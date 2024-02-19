@@ -1,3 +1,3 @@
-module github.com/ivanchalukov/container-guardian
+module github.com/IvanChalukov/container-guardian
 
 go 1.21
