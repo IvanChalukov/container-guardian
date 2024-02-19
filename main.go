@@ -69,7 +69,9 @@ func main() {
 	if *backupDir == "" || *dbContainer == "" || *dbName == "" || *dbUser == "" {
 		log.Fatal("backup-dir, db-container, db-name and db-user must all be provided.")
 	}
+
 	backupFilename := fmt.Sprintf("backup_%s_%s.sql", *dbName, timestamp)
+	log.Printf("Creating backup for %s in container %s...\n", *dbName, *dbContainer)
 
 	fmt.Println(*keepBackups)
 	fmt.Println(backupFilename)
@@ -86,8 +88,13 @@ func main() {
 		log.Fatal("Error writing database backup to file: \n", err)
 	}
 
+	log.Printf("Backup saved to: %s\n", backupPath)
+
 	err = cleanupOldBackups(*backupDir, *dbName, *keepBackups)
 	if err != nil {
 		log.Fatal("Error cleaning up old backups: \n", err)
 	}
+
+	log.Printf("Backup for %s completed. Older backups cleared.\n", *dbName)
+
 }
